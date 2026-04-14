@@ -1,8 +1,8 @@
-# Technical Documentation - Assignment 2
+# Technical Documentation - Assignments 2 & 3
 
 ## Project Architecture
 
-This document provides technical details about the portfolio website's interactive features implemented in Assignment 2.
+This document provides technical details about the portfolio website's interactive features implemented across Assignments 2 and 3.
 
 ---
 
@@ -26,15 +26,19 @@ assignment-2/
 
 ---
 
-## New Features Overview
+## Features Overview
 
-| Feature | Requirement Covered | Implementation |
-|---------|---------------------|----------------|
-| Project Filtering | Dynamic Content | Data attributes + JavaScript filtering |
-| Theme Toggle | Data Handling (localStorage) | localStorage API |
-| Form Validation | Error Handling + User Feedback | Real-time validation + error messages |
-| Toast Notifications | User Feedback | CSS animations + JavaScript |
-| Scroll Animations | Animation/Transitions | Scroll event + CSS transitions |
+| Feature | Assignment | Requirement | Implementation |
+| --- | --- | --- | --- |
+| Dark/Light Theme Toggle | 1 | State Management | localStorage API + CSS variables |
+| Project Filtering | 2 | Dynamic Content | Data attributes + class toggling |
+| Form Validation | 2 | Complex Logic | Real-time validation + error messages |
+| Toast Notifications | 2 | User Feedback | CSS animations + JavaScript |
+| Scroll Animations | 2 | Animation | Scroll event + CSS transitions |
+| GitHub API Integration | 3 | API Integration | Fetch API + skeleton loading + fallback |
+| Project Sorting | 3 | Complex Logic | In-memory sort + data-driven render |
+| Visitor Name State | 3 | State Management | localStorage + greeting banner |
+| Preconnect Hint | 3 | Performance | `<link rel="preconnect">` in `<head>` |
 
 ---
 
@@ -485,9 +489,161 @@ All features work in modern browsers (Chrome 60+, Firefox 55+, Safari 12+, Edge 
 
 ## Future Improvements
 
-1. **API Integration** — Fetch projects from GitHub API
-2. **Loading States** — Show skeleton loaders while fetching
-3. **Search** — Add text search in addition to filter buttons
-4. **Animations** — Add staggered animations for project cards
-5. **Form Backend** — Connect form to email service (Formspree, Netlify Forms)
-6. **Accessibility** — Add ARIA live regions for dynamic content updates
+1. **Search** — Add text search on top of filter + sort
+2. **Form Backend** — Connect form to email service (Formspree, Netlify Forms)
+3. **Accessibility** — Add ARIA live regions for dynamic content updates
+4. **Debounce Scroll** — Throttle the scroll animation handler for large pages
+
+---
+
+## Assignment 3 — New Features
+
+### Feature 6: GitHub API Integration
+
+#### API Flow
+
+```text
+Page loads
+    ↓
+3 skeleton cards rendered immediately
+    ↓
+fetch(github.com/users/PwnSaif/repos)
+    ↓
+    ┌─────────────┐       ┌────────────────────┐
+    │  API success │       │   API failure       │
+    └─────────────┘       └────────────────────┘
+           ↓                        ↓
+  state.repos = repos      state.repos = FALLBACK_REPOS
+  hide fallback notice     show fallback notice
+           ↓                        ↓
+           └──────────┬─────────────┘
+                      ↓
+               renderProjects()
+```
+
+#### State Object
+
+```javascript
+const state = {
+    repos: [],           // array of repo objects from API or fallback
+    activeFilter: 'all', // current filter category
+    activeSort: 'updated', // 'updated' | 'name-asc' | 'name-desc'
+    visitorName: localStorage.getItem('visitorName') || null,
+};
+```
+
+#### Tag Inference
+
+Tags are derived at render time from repo name, description, and topics:
+
+```javascript
+function getRepoTags(repo) {
+    const tags = new Set();
+    const text = `${repo.name} ${repo.description} ${repo.topics.join(' ')}`.toLowerCase();
+    if (repo.language === 'Python') tags.add('python');
+    if (SECURITY_KEYWORDS.some(kw => text.includes(kw))) tags.add('security');
+    if (NETWORKING_KEYWORDS.some(kw => text.includes(kw))) tags.add('networking');
+    return tags;
+}
+```
+
+#### Skeleton Loading CSS
+
+```css
+@keyframes shimmer {
+    0%   { background-position: -400px 0; }
+    100% { background-position:  400px 0; }
+}
+
+.skeleton-line {
+    background: linear-gradient(90deg,
+        var(--border-color) 25%,
+        var(--bg-secondary) 50%,
+        var(--border-color) 75%
+    );
+    background-size: 800px 100%;
+    animation: shimmer 1.4s infinite linear;
+}
+```
+
+---
+
+### Feature 7: Project Sorting
+
+Filter and sort are always applied together in `renderProjects()`:
+
+```text
+state.repos
+    → filter by state.activeFilter (getRepoTags)
+    → sort by state.activeSort (localeCompare / default API order)
+    → clear grid
+    → append new cards
+    → show/hide empty state
+```
+
+Sort options:
+
+| Value | Behavior |
+| --- | --- |
+| `updated` | Keeps API order (pushed_at descending) |
+| `name-asc` | `a.name.localeCompare(b.name)` |
+| `name-desc` | `b.name.localeCompare(a.name)` |
+
+---
+
+### Feature 8: Visitor Name State
+
+#### Visitor Name Flow
+
+```text
+Page loads
+    ↓
+Read localStorage.getItem('visitorName')
+    ↓
+    ┌──────────────┐       ┌──────────────────┐
+    │  Name exists  │       │   No name stored  │
+    └──────────────┘       └──────────────────┘
+           ↓                        ↓
+  Show greeting banner      Show name prompt
+  Hide name prompt          Hide greeting banner
+```
+
+#### Storage Keys
+
+| Key | Value | When Set |
+| --- | --- | --- |
+| `theme` | `'dark'` or `'light'` | On theme toggle |
+| `visitorName` | User's entered name | On "Save" button click |
+
+---
+
+## Updated Browser Compatibility
+
+| Feature | Chrome | Firefox | Safari | Edge |
+| --- | --- | --- | --- | --- |
+| CSS Variables | ✅ | ✅ | ✅ | ✅ |
+| Fetch API | ✅ | ✅ | ✅ | ✅ |
+| localStorage | ✅ | ✅ | ✅ | ✅ |
+| Optional chaining (`?.`) | ✅ 80+ | ✅ 74+ | ✅ 13.1+ | ✅ 80+ |
+| CSS `@keyframes` | ✅ | ✅ | ✅ | ✅ |
+| `dataset` API | ✅ | ✅ | ✅ | ✅ |
+
+---
+
+## Updated Testing Checklist
+
+### Assignment 3
+
+- [x] Skeleton cards appear on page load
+- [x] GitHub repos load and replace skeleton cards
+- [x] Fallback data shown when API unavailable (test by going offline)
+- [x] Fallback notice visible when using fallback data
+- [x] Filter buttons work on API-fetched repos
+- [x] Sort dropdown reorders visible cards
+- [x] Filter + sort work together correctly
+- [x] Empty state shown when filter matches nothing
+- [x] Visitor name prompt visible on first visit
+- [x] Entering a name hides the prompt and shows greeting banner
+- [x] Greeting banner persists across page reloads
+- [x] "Change name" link clears name and re-shows prompt
+- [x] All Assignment 2 features still work (no regressions)

@@ -1,6 +1,6 @@
-# Saif Alsadah - Personal Portfolio (Assignment 2)
+# Saif Alsadah - Personal Portfolio (Assignment 3)
 
-A responsive, interactive personal portfolio website built as part of SWE 363 (Web Engineering) Assignment 2 at KFUPM. This assignment builds upon Assignment 1 by adding dynamic content, form validation, animations, and enhanced user feedback.
+A responsive, interactive personal portfolio website built as part of SWE 363 (Web Engineering) Assignment 3 at KFUPM. This assignment builds upon Assignments 1 and 2 by adding API integration, advanced state management, complex filtering and sorting logic, and performance optimizations.
 
 ## 🌐 Live Demo
 
@@ -8,7 +8,7 @@ A responsive, interactive personal portfolio website built as part of SWE 363 (W
 
 ## 📋 Project Overview
 
-This portfolio showcases my skills, projects, and certifications as a Computer Science student with a concentration in Cybersecurity & Blockchain. The site features interactive project filtering, form validation, scroll animations, and a dark/light theme toggle.
+This portfolio showcases my skills, projects, and certifications as a Computer Science student with a concentration in Cybersecurity & Networking. The site dynamically fetches GitHub repositories, supports project filtering and sorting, greets returning visitors by name, and is optimized for fast load times.
 
 ### Features
 
@@ -18,24 +18,30 @@ This portfolio showcases my skills, projects, and certifications as a Computer S
 - Smooth Navigation — CSS smooth scrolling between sections
 - Modern UI — Card-based layouts, hover effects, clean typography
 
-**New in Assignment 2:**
+**From Assignment 2:**
 - **Project Filtering** — Filter projects by technology (All, Python, Security, Networking)
 - **Form Validation** — Real-time validation with error messages
 - **Toast Notifications** — Success/error feedback messages
 - **Scroll Animations** — Fade-in effects as sections come into view
-- **Empty State Handling** — User feedback when no projects match filter
+
+**New in Assignment 3:**
+- **GitHub API Integration** — Live project cards fetched from the GitHub API; skeleton loading cards shown while waiting; graceful fallback to saved data if the API is unavailable
+- **Project Sorting** — Sort by Most Recent, Name A–Z, or Name Z–A on top of the active filter
+- **Visitor Name State** — Greeting banner for returning visitors; name stored in localStorage; prompt shown to first-time visitors
+- **Performance** — `preconnect` hint for the GitHub API, font `display=swap` already in place
 
 ## 🛠️ Technologies Used
 
 - HTML5 (Semantic markup)
 - CSS3 (Flexbox, Grid, CSS Variables, Media Queries, Transitions, Animations)
-- JavaScript (DOM manipulation, localStorage, Event handling, Form validation)
+- JavaScript (DOM manipulation, Fetch API, localStorage, Event handling, Form validation)
+- GitHub REST API v3
 - Google Fonts (Inter)
 
 ## 📁 Project Structure
 
 ```
-assignment-2/
+202257480-Saif_Alsadah-assignment3/
 ├── index.html
 ├── css/
 │   └── styles.css
@@ -62,12 +68,12 @@ assignment-2/
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/SaifKFUPM/202257480-Saif_Alsadah-assignment2.git
+   git clone https://github.com/PwnSaif/202257480-Saif_Alsadah-assignment3.git
    ```
 
 2. Navigate to the project folder:
    ```bash
-   cd 202257480-Saif_Alsadah-assignment2
+   cd 202257480-Saif_Alsadah-assignment3
    ```
 
 3. Open `index.html` in your browser, or use Live Server in VS Code:
@@ -82,38 +88,53 @@ The site can be deployed to any static hosting service:
 - **Netlify**: Drag and drop the folder or connect your GitHub repo
 - **Vercel**: Import from GitHub
 
-## ✨ New Features Explained
+## ✨ Features Explained
 
-### Project Filtering
-Click the filter buttons (All, Python, Security, Networking) above the projects grid to show only matching projects. Projects animate smoothly when filtered, and an empty state message appears if no projects match.
+### GitHub API Integration
+
+On page load the site fetches public repositories from the GitHub API (`PwnSaif`). Three skeleton loading cards animate while the request is in flight. Each card shows the repo name, description, language, and topics. If the API is unavailable (rate limit or offline), the site falls back to a saved list of projects and shows a notice.
+
+### Project Filtering & Sorting
+
+Use the filter buttons to narrow projects by category (All, Python, Security, Networking). The sort dropdown works on top of the active filter:
+
+- **Most Recent** — default, ordered by last push date
+- **Name A–Z / Z–A** — alphabetical
+
+### Visitor Name State
+
+First-time visitors see a small prompt in the About section asking for their name. On save, it is stored in localStorage and a personalized greeting banner appears at the top of every future visit. A "Change name" link clears the stored name and re-shows the prompt.
 
 ### Form Validation
+
 The contact form validates input in real-time:
+
 - **Name**: Required, minimum 2 characters
 - **Email**: Required, must be valid email format
 - **Message**: Required, minimum 10 characters
 
-Error messages appear below each field, and inputs show red/green borders for invalid/valid states.
-
 ### Toast Notifications
+
 After form submission, a toast notification slides up from the bottom:
+
 - Green for success ("Message sent successfully!")
 - Red for errors ("Please fix the errors above")
 
 ### Scroll Animations
-Sections fade in smoothly as you scroll down the page, creating a polished user experience.
+Sections fade in smoothly as you scroll down the page.
 
 ## 🤖 AI Usage Summary
 
-AI tools (Claude) were used during development for:
+Claude (Anthropic) was used throughout development for:
 
-- Implementing project filtering logic with data attributes
-- Creating form validation with real-time feedback
-- Building toast notification system
-- Adding scroll-triggered animations
-- Debugging and code optimization
+- Architecture planning and state management design
+- GitHub Fetch API integration and error handling
+- Skeleton loading card implementation
+- Project sorting logic (filter + sort pipeline)
+- Visitor name prompt and localStorage state
+- Debugging linter warnings and code review
 
-All AI-generated code was reviewed, understood, and modified to fit the project requirements. See [docs/ai-usage-report.md](docs/ai-usage-report.md) for detailed documentation.
+All AI-generated code was reviewed, understood, and modified. See [docs/ai-usage-report.md](docs/ai-usage-report.md) for detailed documentation.
 
 ## 📄 Documentation
 

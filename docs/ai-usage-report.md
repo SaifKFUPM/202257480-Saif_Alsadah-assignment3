@@ -1,8 +1,8 @@
-# AI Usage Report - Assignment 2
+# AI Usage Report - Assignments 2 & 3
 
 ## Overview
 
-This document outlines how AI tools were used during the development of interactive features for my personal portfolio website (SWE 363 Assignment 2).
+This document outlines how AI tools were used during the development of my personal portfolio website across SWE 363 Assignments 2 and 3.
 
 ---
 
@@ -12,6 +12,8 @@ This document outlines how AI tools were used during the development of interact
 
 **Primary AI assistant used throughout the project.**
 
+### Assignment 2
+
 | Use Case | How It Helped |
 |----------|---------------|
 | Project Filtering | Asked for guidance on implementing filter buttons with data attributes. Learned about `data-*` attributes and how to use them for filtering DOM elements. |
@@ -20,6 +22,18 @@ This document outlines how AI tools were used during the development of interact
 | Scroll Animations | Requested implementation of fade-in effects on scroll. Understood Intersection Observer concept and simpler scroll-based detection. |
 | Code Review | Submitted code for review to identify bugs and improvements. |
 | Documentation | Used Claude to help structure documentation for the new features. |
+
+### Assignment 3
+
+| Use Case | How It Helped |
+|----------|---------------|
+| Architecture Planning | Discussed how to centralize application state in a single `state` object to support API data, active filter, sort order, and visitor name in one place. |
+| GitHub API Integration | Received guidance on using `fetch` with the GitHub REST API, handling non-OK responses, and graceful degradation to fallback data. |
+| Skeleton Loading Cards | Learned how to create shimmer-animated placeholder cards using a CSS `@keyframes` gradient and linear-gradient `background-size` trick. |
+| Filter + Sort Pipeline | Asked how to combine filtering and sorting on an in-memory array before re-rendering rather than toggling CSS classes on static DOM nodes. |
+| Visitor Name State | Discussed patterns for persisting user state with localStorage, toggling UI elements based on stored values, and using `delete obj.prop` for dataset removal. |
+| Linter Warnings | Claude identified and fixed warnings: `dataset` over `getAttribute`, `replaceAll` over `replace`, `globalThis` over `window`, and optional chaining. |
+| XSS Prevention | Guided the use of `document.createTextNode` inside a temporary `<div>` to safely escape API-sourced strings before inserting them as HTML. |
 
 ---
 
@@ -191,15 +205,45 @@ This document outlines how AI tools were used during the development of interact
 
 ---
 
+## Assignment 3 — Additional Learning Outcomes
+
+### New Technical Skills (Assignment 3)
+
+1. **Fetch API & Error Handling** — Using `fetch` with `.then/.catch`, throwing on non-OK HTTP status, and providing user-visible fallback content rather than silently failing.
+
+2. **Data-Driven Rendering** — Replacing static DOM manipulation (show/hide classes) with a `renderProjects()` function that rebuilds the grid from a filtered and sorted in-memory array — more flexible and easier to reason about.
+
+3. **Skeleton Loading UX** — CSS shimmer animation using `background-position` on a gradient to communicate loading state without blocking the UI.
+
+4. **localStorage State Patterns** — Reading on page load, writing on user action, clearing on request, and keeping a mirrored in-memory copy (`state.visitorName`) so the rest of the code never reads from storage directly.
+
+5. **XSS Safety with API Data** — Using a temporary DOM node and `createTextNode` to escape untrusted strings from the GitHub API before inserting them as HTML.
+
+6. **Modern JS Best Practices** — `dataset` over `getAttribute`, `replaceAll` over regex `replace`, `globalThis` over `window`, optional chaining (`?.`) — flagged by the linter and understood before fixing.
+
+### Assignment 3 Modifications Made
+
+| AI Suggestion | My Modification |
+| --- | --- |
+| Include all repos in the grid | Added `.filter(r => !r.fork)` to exclude forked repos |
+| Show topics array as-is | Capped at 3 topics per card to keep cards compact |
+| Generic keyword lists | Tuned security/networking keyword arrays to match my actual project names |
+| Fetch inside async function | Converted to `.then/.catch` chain to avoid linter warning about top-level async calls |
+| Banner as fixed overlay | Changed to a full-width bar above `<main>` so it doesn't cover content |
+| Store name directly in event handler | Mirrored name in `state.visitorName` first, then called `initVisitorName()` to keep UI logic in one place |
+
+---
+
 ## Conclusion
 
-AI tools significantly accelerated my development process for Assignment 2, especially for implementing interactive features that were new to me. The key was treating AI as a learning resource rather than just a code generator.
+AI tools accelerated my development process across both assignments, particularly for implementing patterns I was encountering for the first time (real-time validation, Fetch API, skeleton loading). The key discipline was treating every suggestion as a starting point — studying it, modifying it to fit my design, and testing it thoroughly before accepting it.
 
-For each feature, I followed this process:
+For each feature I followed this process:
+
 1. Ask AI for guidance and explanation
-2. Study the suggested code
+2. Study the suggested code line by line
 3. Implement and modify to fit my project
-4. Test thoroughly
+4. Test across browsers and screen sizes
 5. Debug issues independently when possible
 
-This approach ensured I understood every line of code while still benefiting from AI assistance. The result is a portfolio with polished interactive features that I can confidently explain and extend.
+This approach ensured I understood every line of code while still benefiting from AI assistance. The result is a portfolio with polished, well-reasoned features I can confidently explain and extend.
