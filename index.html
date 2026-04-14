@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saif Alsadah - Portfolio</title>
+    <link rel="preconnect" href="https://api.github.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -24,6 +25,12 @@
         </div>
     </header>
 
+    <!-- Greeting banner — shown when visitor name is stored in localStorage -->
+    <div class="visitor-banner" id="visitor-banner">
+        <p>Welcome back, <strong id="visitor-banner-name"></strong>!</p>
+        <a href="#" id="change-name-link" class="banner-change">Change name</a>
+    </div>
+
     <main>
         <section id="about">
             <div class="container fade-in">
@@ -31,12 +38,27 @@
                     <h2>About Me</h2>
                     <p class="about-tagline">CS Student at KFUPM | Cybersecurity Enthusiast</p>
                     <p>
-                        Computer Science student at KFUPM with a concentration in Computer Networks (CX). 
-                        AWS Certified (Cloud Practitioner & AI Practitioner) with hands-on experience building 
-                        security tools, database systems, and machine learning models. Proficient in Python-based 
-                        security scripting with active engagement on TryHackMe (41 rooms completed, Gold League 1st place). 
+                        Computer Science student at KFUPM with a concentration in Computer Networks (CX).
+                        AWS Certified (Cloud Practitioner & AI Practitioner) with hands-on experience building
+                        security tools, database systems, and machine learning models. Proficient in Python-based
+                        security scripting with active engagement on TryHackMe (41 rooms completed, Gold League 1st place).
                         Maintains a self-hosted Linux lab environment with Docker for security practice.
                     </p>
+
+                    <!-- Visitor name prompt — hidden once a name is saved -->
+                    <div class="name-prompt" id="name-prompt">
+                        <p class="name-prompt-label">What should I call you?</p>
+                        <div class="name-prompt-form">
+                            <input
+                                type="text"
+                                id="visitor-name-input"
+                                placeholder="Enter your name"
+                                maxlength="50"
+                                autocomplete="given-name"
+                            >
+                            <button id="save-name-btn">Save</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -107,112 +129,31 @@
             <div class="container fade-in">
                 <h2>Projects</h2>
                 
-                <!-- Filter Buttons -->
-                <div class="filter-buttons">
-                    <button class="filter-btn active" data-filter="all">All</button>
-                    <button class="filter-btn" data-filter="python">Python</button>
-                    <button class="filter-btn" data-filter="security">Security</button>
-                    <button class="filter-btn" data-filter="networking">Networking</button>
+                <!-- Filter and Sort Controls -->
+                <div class="projects-controls">
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="python">Python</button>
+                        <button class="filter-btn" data-filter="security">Security</button>
+                        <button class="filter-btn" data-filter="networking">Networking</button>
+                    </div>
+                    <select class="sort-select" id="sort-select" aria-label="Sort projects">
+                        <option value="updated">Most Recent</option>
+                        <option value="name-asc">Name A–Z</option>
+                        <option value="name-desc">Name Z–A</option>
+                    </select>
                 </div>
+
+                <!-- Shown when GitHub API is unavailable -->
+                <p class="api-fallback-notice" id="api-fallback-notice">
+                    Could not reach GitHub — showing saved projects.
+                </p>
 
                 <!-- Empty State Message -->
                 <p class="empty-state" id="no-projects">No projects match your filter.</p>
 
-                <div class="projects-grid">
-                    <div class="project-card" data-tags="python networking">
-                        <div class="project-content">
-                            <h3>Multi-Client Chat Application</h3>
-                            <p>
-                                Real-time client-server chat system using Python sockets with multi-threaded 
-                                connection handling and Tkinter GUI. Features message broadcasting, user 
-                                authentication, and command handling.
-                            </p>
-                            <div class="project-tech">
-                                <span class="tech-tag">Python</span>
-                                <span class="tech-tag">Sockets</span>
-                                <span class="tech-tag">Tkinter</span>
-                            </div>
-                            <a href="https://github.com/PwnSaif/chatbot" target="_blank" class="project-link">
-                                View on GitHub →
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="project-card" data-tags="python networking security">
-                        <div class="project-content">
-                            <h3>Port Scanner</h3>
-                            <p>
-                                Multi-threaded TCP port scanner capable of scanning configurable port ranges 
-                                with timeout handling and open/closed/filtered classification. Demonstrates 
-                                understanding of TCP handshake mechanics.
-                            </p>
-                            <div class="project-tech">
-                                <span class="tech-tag">Python</span>
-                                <span class="tech-tag">Networking</span>
-                                <span class="tech-tag">TCP/IP</span>
-                            </div>
-                            <a href="https://github.com/PwnSaif/port-scanner" target="_blank" class="project-link">
-                                View on GitHub →
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="project-card" data-tags="python security">
-                        <div class="project-content">
-                            <h3>Hash Cracker</h3>
-                            <p>
-                                Dictionary-based MD5 hash cracker that iterates a wordlist and compares 
-                                computed hashes against a target. Relevant to credential-security analysis 
-                                and IAM in cloud platforms.
-                            </p>
-                            <div class="project-tech">
-                                <span class="tech-tag">Python</span>
-                                <span class="tech-tag">Cryptography</span>
-                                <span class="tech-tag">Security</span>
-                            </div>
-                            <a href="https://github.com/PwnSaif/hash-cracker" target="_blank" class="project-link">
-                                View on GitHub →
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="project-card" data-tags="python security">
-                        <div class="project-content">
-                            <h3>Password Generator</h3>
-                            <p>
-                                Configurable generator using Python's cryptographically secure random module, 
-                                supporting custom length and character-set options. Applies secure-credential 
-                                best practices.
-                            </p>
-                            <div class="project-tech">
-                                <span class="tech-tag">Python</span>
-                                <span class="tech-tag">Security</span>
-                            </div>
-                            <a href="https://github.com/PwnSaif/password-gen" target="_blank" class="project-link">
-                                View on GitHub →
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="project-card" data-tags="python security networking">
-                        <div class="project-content">
-                            <h3>HTTP Request & Response Analyser</h3>
-                            <p>
-                                Tool to send HTTP requests and inspect status codes and response headers 
-                                for web-application security assessment. Demonstrates practical understanding 
-                                of HTTP protocol internals.
-                            </p>
-                            <div class="project-tech">
-                                <span class="tech-tag">Python</span>
-                                <span class="tech-tag">HTTP</span>
-                                <span class="tech-tag">Web Security</span>
-                            </div>
-                            <a href="https://github.com/PwnSaif/http-analyser" target="_blank" class="project-link">
-                                View on GitHub →
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                <!-- Project cards are rendered here by script.js -->
+                <div class="projects-grid" id="projects-grid"></div>
             </div>
         </section>
 
