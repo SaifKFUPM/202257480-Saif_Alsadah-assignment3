@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saif Alsadah - Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Saif Alsadah</h1>
+            <nav class="menu">
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#certifications">Certifications</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+        </div>
+    </header>
+
+    <main>
+        <section id="about">
+            <div class="container fade-in">
+                <div class="about-content">
+                    <h2>About Me</h2>
+                    <p class="about-tagline">CS Student at KFUPM | Cybersecurity Enthusiast</p>
+                    <p>
+                        Computer Science student at KFUPM with a concentration in Computer Networks (CX). 
+                        AWS Certified (Cloud Practitioner & AI Practitioner) with hands-on experience building 
+                        security tools, database systems, and machine learning models. Proficient in Python-based 
+                        security scripting with active engagement on TryHackMe (41 rooms completed, Gold League 1st place). 
+                        Maintains a self-hosted Linux lab environment with Docker for security practice.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills">
+            <div class="container fade-in">
+                <h2>Skills</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3>Security Tools</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Nmap</span>
+                            <span class="skill-tag">Wireshark</span>
+                            <span class="skill-tag">Burp Suite</span>
+                            <span class="skill-tag">Metasploit</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Programming & Scripting</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">Java</span>
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">Bash</span>
+                            <span class="skill-tag">SQL</span>
+                            <span class="skill-tag">C</span>
+                            <span class="skill-tag">Verilog</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Cloud & Infrastructure</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">AWS</span>
+                            <span class="skill-tag">Docker</span>
+                            <span class="skill-tag">MySQL/MariaDB</span>
+                            <span class="skill-tag">Git</span>
+                            <span class="skill-tag">Linux</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Concepts & Frameworks</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">OWASP Top 10</span>
+                            <span class="skill-tag">TCP/IP</span>
+                            <span class="skill-tag">Vulnerability Assessment</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Lab Environment</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Home Lab (Docker)</span>
+                            <span class="skill-tag">DVWA</span>
+                            <span class="skill-tag">Juice Shop</span>
+                            <span class="skill-tag">WebGoat</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Practice Platforms</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">TryHackMe</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <div class="container fade-in">
+                <h2>Projects</h2>
+                
+                <!-- Filter Buttons -->
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="python">Python</button>
+                    <button class="filter-btn" data-filter="security">Security</button>
+                    <button class="filter-btn" data-filter="networking">Networking</button>
+                </div>
+
+                <!-- Empty State Message -->
+                <p class="empty-state" id="no-projects">No projects match your filter.</p>
+
+                <div class="projects-grid">
+                    <div class="project-card" data-tags="python networking">
+                        <div class="project-content">
+                            <h3>Multi-Client Chat Application</h3>
+                            <p>
+                                Real-time client-server chat system using Python sockets with multi-threaded 
+                                connection handling and Tkinter GUI. Features message broadcasting, user 
+                                authentication, and command handling.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Sockets</span>
+                                <span class="tech-tag">Tkinter</span>
+                            </div>
+                            <a href="https://github.com/PwnSaif/chatbot" target="_blank" class="project-link">
+                                View on GitHub →
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="project-card" data-tags="python networking security">
+                        <div class="project-content">
+                            <h3>Port Scanner</h3>
+                            <p>
+                                Multi-threaded TCP port scanner capable of scanning configurable port ranges 
+                                with timeout handling and open/closed/filtered classification. Demonstrates 
+                                understanding of TCP handshake mechanics.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Networking</span>
+                                <span class="tech-tag">TCP/IP</span>
+                            </div>
+                            <a href="https://github.com/PwnSaif/port-scanner" target="_blank" class="project-link">
+                                View on GitHub →
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="project-card" data-tags="python security">
+                        <div class="project-content">
+                            <h3>Hash Cracker</h3>
+                            <p>
+                                Dictionary-based MD5 hash cracker that iterates a wordlist and compares 
+                                computed hashes against a target. Relevant to credential-security analysis 
+                                and IAM in cloud platforms.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Cryptography</span>
+                                <span class="tech-tag">Security</span>
+                            </div>
+                            <a href="https://github.com/PwnSaif/hash-cracker" target="_blank" class="project-link">
+                                View on GitHub →
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="project-card" data-tags="python security">
+                        <div class="project-content">
+                            <h3>Password Generator</h3>
+                            <p>
+                                Configurable generator using Python's cryptographically secure random module, 
+                                supporting custom length and character-set options. Applies secure-credential 
+                                best practices.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Security</span>
+                            </div>
+                            <a href="https://github.com/PwnSaif/password-gen" target="_blank" class="project-link">
+                                View on GitHub →
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="project-card" data-tags="python security networking">
+                        <div class="project-content">
+                            <h3>HTTP Request & Response Analyser</h3>
+                            <p>
+                                Tool to send HTTP requests and inspect status codes and response headers 
+                                for web-application security assessment. Demonstrates practical understanding 
+                                of HTTP protocol internals.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">HTTP</span>
+                                <span class="tech-tag">Web Security</span>
+                            </div>
+                            <a href="https://github.com/PwnSaif/http-analyser" target="_blank" class="project-link">
+                                View on GitHub →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="certifications">
+            <div class="container fade-in">
+                <h2>Certifications & Training</h2>
+                <div class="cert-list">
+                    <div class="cert-item">
+                        <div class="cert-details">
+                            <h3>AWS Certified Cloud Practitioner</h3>
+                            <p>Amazon Web Services</p>
+                        </div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-details">
+                            <h3>AWS Certified AI Practitioner</h3>
+                            <p>Amazon Web Services</p>
+                        </div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-details">
+                            <h3>KAUST Introductory Cybersecurity Training Program</h3>
+                            <p>KAUST & NCA — February 2025 (40 hours)</p>
+                        </div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-details">
+                            <h3>Mawhiba Academic Enrichment Program</h3>
+                            <p>Cryptography & Information Security — King Abdulaziz Foundation, 2019 (90 hours)</p>
+                        </div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-details">
+                            <h3>Self-Hosted Security Lab</h3>
+                            <p>Docker containers with DVWA, Juice Shop, WebGoat</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="container fade-in">
+                <h2>Contact Me</h2>
+                <form id="contact-form" novalidate>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" placeholder="Your name" required>
+                        <span class="error-message" id="name-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Your email" required>
+                        <span class="error-message" id="email-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" placeholder="Your message" required></textarea>
+                        <span class="error-message" id="message-error"></span>
+                    </div>
+                    <button type="submit">Send Message</button>
+                </form>
+                <!-- Success/Error Toast Messages -->
+                <div class="toast" id="toast"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://github.com/PwnSaif" target="_blank" aria-label="GitHub">GitHub</a>
+                <a href="https://linkedin.com/in/saifalsadah" target="_blank" aria-label="LinkedIn">LinkedIn</a>
+            </div>
+            <p>&copy; 2025 Saif Alsadah. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
